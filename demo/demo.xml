@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- Customers -->
+        <record id="partner_cafe_centro" model="res.partner">
+            <field name="name">Cafetería Centro</field>
+            <field name="customer_rank">1</field>
+        </record>
+        <record id="partner_hotel_mar" model="res.partner">
+            <field name="name">Hotel Mar</field>
+            <field name="customer_rank">1</field>
+        </record>
+
+        <!-- Products (storable so they can carry lots downstream) -->
+        <record id="prod_base_vainilla" model="product.product">
+            <field name="name">Base Vainilla</field>
+            <field name="type">product</field>
+        </record>
+        <record id="prod_base_yogur" model="product.product">
+            <field name="name">Base Yoghurt</field>
+            <field name="type">product</field>
+        </record>
+        <record id="prod_oreo" model="product.product">
+            <field name="name">Topping Oreo</field>
+            <field name="type">product</field>
+        </record>
+        <record id="prod_rainbow" model="product.product">
+            <field name="name">Topping Rainbow Sprinkles</field>
+            <field name="type">product</field>
+        </record>
+
+        <!-- Machines: Cafetería Centro has TWO machines (ice-cream base vs yoghurt base) -->
+        <record id="machine_001" model="softlife.machine">
+            <field name="name">B84MAX-001</field>
+            <field name="ref">SL-001</field>
+            <field name="device_imei">867395075018172</field>
+            <field name="partner_id" ref="partner_cafe_centro"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="base_product_id" ref="prod_base_vainilla"/>
+            <field name="state">active</field>
+        </record>
+        <record id="machine_002" model="softlife.machine">
+            <field name="name">B84MAX-002</field>
+            <field name="ref">SL-002</field>
+            <field name="device_imei">867395075018173</field>
+            <field name="partner_id" ref="partner_cafe_centro"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="base_product_id" ref="prod_base_yogur"/>
+            <field name="state">active</field>
+        </record>
+        <record id="machine_003" model="softlife.machine">
+            <field name="name">B84MAX-003</field>
+            <field name="ref">SL-003</field>
+            <field name="device_imei">867395075018174</field>
+            <field name="partner_id" ref="partner_hotel_mar"/>
+            <field name="warehouse_id" ref="stock.warehouse0"/>
+            <field name="location_id" ref="stock.stock_location_stock"/>
+            <field name="base_product_id" ref="prod_base_vainilla"/>
+            <field name="state">active</field>
+        </record>
+
+        <!-- Hopper / ingredient configuration -->
+        <record id="ing_001_base" model="softlife.machine.ingredient">
+            <field name="machine_id" ref="machine_001"/>
+            <field name="position">1</field>
+            <field name="product_id" ref="prod_base_vainilla"/>
+            <field name="product_type">base</field>
+            <field name="portion_size">0.08</field>
+            <field name="loaded_capacity">10</field>
+        </record>
+        <record id="ing_001_oreo" model="softlife.machine.ingredient">
+            <field name="machine_id" ref="machine_001"/>
+            <field name="position">topping_1</field>
+            <field name="product_id" ref="prod_oreo"/>
+            <field name="product_type">topping</field>
+            <field name="portion_size">0.012</field>
+            <field name="loaded_capacity">2</field>
+        </record>
+        <record id="ing_001_rainbow" model="softlife.machine.ingredient">
+            <field name="machine_id" ref="machine_001"/>
+            <field name="position">topping_2</field>
+            <field name="product_id" ref="prod_rainbow"/>
+            <field name="product_type">topping</field>
+            <field name="cycled" eval="True"/>
+            <field name="portion_size">0.010</field>
+            <field name="loaded_capacity">2</field>
+        </record>
+        <record id="ing_002_base" model="softlife.machine.ingredient">
+            <field name="machine_id" ref="machine_002"/>
+            <field name="position">1</field>
+            <field name="product_id" ref="prod_base_yogur"/>
+            <field name="product_type">base</field>
+            <field name="portion_size">0.08</field>
+            <field name="loaded_capacity">10</field>
+        </record>
+        <record id="ing_002_oreo" model="softlife.machine.ingredient">
+            <field name="machine_id" ref="machine_002"/>
+            <field name="position">topping_1</field>
+            <field name="product_id" ref="prod_oreo"/>
+            <field name="product_type">topping</field>
+            <field name="portion_size">0.012</field>
+            <field name="loaded_capacity">2</field>
+        </record>
+
+        <!-- A sample transfer/delivery document -->
+        <record id="transfer_001" model="softlife.machine.transfer">
+            <field name="machine_id" ref="machine_003"/>
+            <field name="to_partner_id" ref="partner_hotel_mar"/>
+            <field name="to_location_id" ref="stock.stock_location_stock"/>
+            <field name="note">Initial deployment to Hotel Mar.</field>
+        </record>
+
+    </data>
+</odoo>

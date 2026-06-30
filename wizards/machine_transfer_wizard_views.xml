@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_machine_transfer_wizard_form" model="ir.ui.view">
+            <field name="name">softlife.machine.transfer.wizard.form</field>
+            <field name="model">softlife.machine.transfer.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Assign / Transfer Machine">
+                    <group>
+                        <field name="machine_id" readonly="1"/>
+                        <field name="from_partner_id"/>
+                        <field name="from_location_id"/>
+                    </group>
+                    <group string="New assignment">
+                        <field name="to_partner_id"/>
+                        <field name="to_location_id"/>
+                        <field name="to_warehouse_id"/>
+                    </group>
+                    <group>
+                        <field name="note"/>
+                    </group>
+                    <footer>
+                        <button string="Create Delivery &amp; Transfer" type="object"
+                                name="action_apply" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

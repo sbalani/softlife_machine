@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_softlife_machine_user,softlife.machine user,model_softlife_machine,group_softlife_machine_user,1,1,1,1
+access_softlife_machine_manager,softlife.machine manager,model_softlife_machine,group_softlife_machine_manager,1,1,1,1
+access_softlife_machine_admin,softlife.machine admin,model_softlife_machine,base.group_system,1,1,1,1
+access_softlife_machine_ingredient_user,softlife.machine.ingredient user,model_softlife_machine_ingredient,group_softlife_machine_user,1,1,1,1
+access_softlife_machine_ingredient_admin,softlife.machine.ingredient admin,model_softlife_machine_ingredient,base.group_system,1,1,1,1
+access_softlife_machine_transfer_user,softlife.machine.transfer user,model_softlife_machine_transfer,group_softlife_machine_user,1,1,1,1
+access_softlife_machine_transfer_admin,softlife.machine.transfer admin,model_softlife_machine_transfer,base.group_system,1,1,1,1
+access_softlife_machine_transfer_wizard,softlife.machine.transfer.wizard,model_softlife_machine_transfer_wizard,group_softlife_machine_user,1,1,1,1

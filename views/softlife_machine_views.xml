@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Tree -->
+        <record id="view_softlife_machine_tree" model="ir.ui.view">
+            <field name="name">softlife.machine.tree</field>
+            <field name="model">softlife.machine</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="ref"/>
+                    <field name="name"/>
+                    <field name="device_imei"/>
+                    <field name="partner_id"/>
+                    <field name="warehouse_id"/>
+                    <field name="base_product_id"/>
+                    <field name="last_full_clean_date"/>
+                    <field name="state" widget="badge"
+                           decoration-success="state == 'active'"
+                           decoration-warning="state == 'in_transit'"
+                           decoration-muted="state in ('stored','retired')"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Kanban -->
+        <record id="view_softlife_machine_kanban" model="ir.ui.view">
+            <field name="name">softlife.machine.kanban</field>
+            <field name="model">softlife.machine</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state">
+                    <field name="state"/>
+                    <field name="partner_id"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_card">
+                                <strong><field name="name"/></strong>
+                                <div><field name="ref"/></div>
+                                <div>IMEI: <field name="device_imei"/></div>
+                                <div><field name="partner_id"/></div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Search -->
+        <record id="view_softlife_machine_search" model="ir.ui.view">
+            <field name="name">softlife.machine.search</field>
+            <field name="model">softlife.machine</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="ref"/>
+                    <field name="device_imei"/>
+                    <field name="partner_id"/>
+                    <field name="warehouse_id"/>
+                    <filter name="f_active" string="Active" domain="[('state','=','active')]"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter name="g_partner" string="Customer" context="{'group_by':'partner_id'}"/>
+                        <filter name="g_warehouse" string="Serving Warehouse" context="{'group_by':'warehouse_id'}"/>
+                        <filter name="g_state" string="State" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!-- Form -->
+        <record id="view_softlife_machine_form" model="ir.ui.view">
+            <field name="name">softlife.machine.form</field>
+            <field name="model">softlife.machine</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="action_transfer" string="Assign / Transfer" type="object"
+                                class="btn-primary" groups="softlife_machine.group_softlife_machine_user"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="active,in_transit,stored,retired"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="action_open_transfers" type="object"
+                                    class="oe_stat_button" icon="fa-truck">
+                                <field name="transfer_count" widget="statinfo" string="Transfers"/>
+                            </button>
+                        </div>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1><field name="name" placeholder="e.g. B84MAX-001"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="ref"/>
+                                <field name="device_imei"/>
+                                <field name="device_id_huaxin"/>
+                            </group>
+                            <group>
+                                <field name="partner_id"/>
+                                <field name="location_id"/>
+                                <field name="warehouse_id"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="base_product_id"/>
+                                <field name="last_full_clean_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Hoppers / Ingredients" name="ingredients">
+                                <field name="ingredient_line_ids">
+                                    <tree editable="bottom">
+                                        <field name="position"/>
+                                        <field name="product_id"/>
+                                        <field name="product_type"/>
+                                        <field name="enabled"/>
+                                        <field name="cycled"/>
+                                        <field name="portion_size"/>
+                                        <field name="loaded_capacity"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Transfers" name="transfers">
+                                <field name="transfer_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="from_partner_id"/>
+                                        <field name="to_partner_id"/>
+                                        <field name="to_location_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_softlife_machine" model="ir.actions.act_window">
+            <field name="name">Machines</field>
+            <field name="res_model">softlife.machine</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_softlife_machine_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">Create your first soft-serve machine</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>
