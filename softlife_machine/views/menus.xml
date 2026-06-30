@@ -14,7 +14,7 @@
         <record id="action_softlife_machine_transfer" model="ir.actions.act_window">
             <field name="name">Machine Transfers</field>
             <field name="res_model">softlife.machine.transfer</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">list,form</field>
         </record>
     </data>
 </odoo>

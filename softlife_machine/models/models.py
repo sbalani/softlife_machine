@@ -64,7 +64,7 @@ class SoftlifeMachine(models.Model):
             'type': 'ir.actions.act_window',
             'name': 'Transfers',
             'res_model': 'softlife.machine.transfer',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'domain': [('machine_id', '=', self.id)],
             'context': {'default_machine_id': self.id},
         }
